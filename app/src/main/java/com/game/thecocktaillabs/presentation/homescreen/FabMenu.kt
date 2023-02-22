@@ -1,5 +1,6 @@
 package com.game.thecocktaillabs.presentation.homescreen
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -29,7 +30,8 @@ fun FabMenu(
         modifier = modifier
             .padding(end = 8.dp),
         elevation = 8.dp,
-        shape = RoundedCornerShape(10.dp)
+        shape = RoundedCornerShape(10.dp),
+        border = BorderStroke(color = MaterialTheme.colors.primary, width = 1.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

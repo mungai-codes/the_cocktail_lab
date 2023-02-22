@@ -1,10 +1,13 @@
-package com.game.thecocktaillabs.presentation.homescreen
+package com.game.thecocktaillabs.presentation.searchscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -15,18 +18,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.game.thecocktaillabs.presentation.homescreen.FabButton
 import com.game.thecocktaillabs.presentation.navigation.Screen
 import com.game.thecocktaillabs.presentation.ui.theme.TheCocktailLabsTheme
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun SearchScreen(
+    navController: NavController
+) {
 
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopBar()
+            TopBar(
+                alcoholicSearch = {},
+                nonAlcoholicSearch = {},
+                normalSearch = {})
         },
         floatingActionButton = {
             FabButton(
@@ -36,6 +45,7 @@ fun HomeScreen(navController: NavController) {
             )
         }
     ) { innerPadding ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -45,45 +55,32 @@ fun HomeScreen(navController: NavController) {
                 thickness = 1.5.dp,
                 color = MaterialTheme.colors.primary.copy(alpha = 0.5f)
             )
-            LazyColumn(
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = innerPadding.calculateBottomPadding()),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(top = 16.dp)
             ) {
 
-                item {
-
+                items(listOf("1", "2", "3", "4", "5","1", "2", "3", "4", "5","1", "2", "3", "4", "5",)) { item ->
+                    ResultItemCard()
                 }
 
-                item {
-                    HomeScreenData(
-                        data = listOf("1", "2", "3", "4", "5"),
-                        title = "Featured Cocktails",
-                        seeMore = { /*TODO*/ }
-                    ) {
-                        ItemCard()
-                    }
-                }
-
-                item {
-                    HomeScreenData(
-                        data = listOf("1", "2", "3", "4", "5"),
-                        title = "Your Cocktails",
-                        seeMore = { /*TODO*/ }
-                    ) {
-                        ItemCard()
-                    }
-                }
             }
         }
+
+
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+fun SearchScreenPreview() {
     TheCocktailLabsTheme {
-        HomeScreen(rememberNavController())
+        SearchScreen(navController = rememberNavController())
     }
 }

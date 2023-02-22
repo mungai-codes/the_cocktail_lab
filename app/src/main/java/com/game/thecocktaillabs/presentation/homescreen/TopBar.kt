@@ -44,10 +44,15 @@ fun TopBar(
                 text = "Good Morning Username",
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.SansSerif,
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                color = MaterialTheme.colors.onSurface
             )
             IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Outlined.Settings, contentDescription = "App Settings")
+                Icon(
+                    imageVector = Icons.Outlined.Settings,
+                    contentDescription = "App Settings",
+                    tint = MaterialTheme.colors.primary
+                )
             }
         }
         Row(
@@ -74,7 +79,7 @@ fun TopBar(
                 },
                 shape = RoundedCornerShape(16.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = Color.Black,
+                    unfocusedBorderColor = MaterialTheme.colors.primary,
                     focusedBorderColor = MaterialTheme.colors.primary
                 ),
                 modifier = Modifier

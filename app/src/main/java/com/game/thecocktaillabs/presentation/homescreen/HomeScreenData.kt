@@ -46,7 +46,8 @@ fun <T> HomeScreenData(
                 text = title,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = FontFamily.SansSerif,
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                color = MaterialTheme.colors.onSurface
             )
             IconButton(onClick = seeMore) {
                 Icon(
