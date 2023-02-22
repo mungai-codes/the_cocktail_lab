@@ -66,7 +66,25 @@ fun SearchScreen(
                 contentPadding = PaddingValues(top = 16.dp)
             ) {
 
-                items(listOf("1", "2", "3", "4", "5","1", "2", "3", "4", "5","1", "2", "3", "4", "5",)) { item ->
+                items(
+                    listOf(
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                    )
+                ) {
                     ResultItemCard()
                 }
 

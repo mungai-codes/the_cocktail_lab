@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -20,7 +19,7 @@ fun ResultItemCard(
 ) {
     Surface(
         modifier = modifier
-            .height(150.dp),
+            .height(140.dp),
         elevation = 8.dp,
         shape = RoundedCornerShape(10.dp)
     ) {

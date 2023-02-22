@@ -1,6 +1,7 @@
 package com.game.thecocktaillabs.presentation.searchscreen
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -90,7 +91,8 @@ fun TopBar(
                     .padding(top = 20.dp),
                 shape = RoundedCornerShape(10.dp),
                 elevation = 8.dp,
-                border = BorderStroke(1.dp, MaterialTheme.colors.primary)
+                border = BorderStroke(1.dp, MaterialTheme.colors.primary),
+                color = MaterialTheme.colors.primary.copy(alpha = 0.5f)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -101,7 +103,8 @@ fun TopBar(
                         fontFamily = FontFamily.SansSerif,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
-                            .padding(start = 16.dp)
+                            .padding(start = 16.dp),
+                        color = MaterialTheme.colors.onSurface
                     )
                     IconButton(onClick = { }) {
                         ExposedDropdownMenuDefaults.TrailingIcon(
@@ -113,7 +116,9 @@ fun TopBar(
 
             ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background),
             ) {
                 listItems.forEach { selectedOption ->
 
@@ -168,7 +173,11 @@ fun TopBar(
                 ) {
                     items(randomItems.shuffled()) { item ->
                         Chip(onClick = { nonAlcoholicSearch(item) }) {
-                            Text(text = item, fontFamily = FontFamily.SansSerif)
+                            Text(
+                                text = item,
+                                fontFamily = FontFamily.SansSerif,
+                                color = MaterialTheme.colors.onSurface
+                            )
                         }
                     }
                 }
@@ -183,7 +192,11 @@ fun TopBar(
                 ) {
                     items(randomItems.shuffled().take(5)) { item ->
                         Chip(onClick = { alcoholicSearch(item) }) {
-                            Text(text = item, fontFamily = FontFamily.SansSerif)
+                            Text(
+                                text = item,
+                                fontFamily = FontFamily.SansSerif,
+                                color = MaterialTheme.colors.onSurface
+                            )
                         }
                     }
                 }

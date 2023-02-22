@@ -13,5 +13,3 @@ y
 Iapp/src/main/java/com/game/thecocktaillabs/presentation/ui/theme/Shape.kt,3\0\3072c5c0313a903ae9a242c43672b27da3fa3546
 y
 Iapp/src/main/java/com/game/thecocktaillabs/presentation/ui/theme/Color.kt,c\6\c699be2874087884b6383cb49dc2bafcbe18dc60
-y
-Iapp/src/main/java/com/game/thecocktaillabs/presentation/ui/theme/Theme.kt,5\6\565aca2490879051792ac51f6d7f257d53aa81c9
