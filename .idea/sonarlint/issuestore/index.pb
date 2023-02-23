@@ -1,6 +1,4 @@
 
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 x
 Happ/src/main/java/com/game/thecocktaillabs/presentation/ui/theme/Type.kt,5\2\52a2d83cb8bf7d09939ffc58061bddd5f85d0b83
 <
@@ -13,3 +11,25 @@ y
 Iapp/src/main/java/com/game/thecocktaillabs/presentation/ui/theme/Shape.kt,3\0\3072c5c0313a903ae9a242c43672b27da3fa3546
 y
 Iapp/src/main/java/com/game/thecocktaillabs/presentation/ui/theme/Color.kt,c\6\c699be2874087884b6383cb49dc2bafcbe18dc60
+}
+Mapp/src/main/java/com/game/thecocktaillabs/presentation/homescreen/FabMenu.kt,3\7\3796e4b118307c9da295dfd404ef2fa65437aa75
+~
+Napp/src/main/java/com/game/thecocktaillabs/presentation/navigation/NavGraph.kt,e\f\eff689d3df057aa3b1a45245a206328e1a090dcd
+|
+Lapp/src/main/java/com/game/thecocktaillabs/presentation/navigation/Screen.kt,2\b\2b66abb2b1a5a74699addfcb8de06b9dc626f39c
+|
+Lapp/src/main/java/com/game/thecocktaillabs/presentation/homescreen/TopBar.kt,1\a\1af8554cbbc204481fbe265862b71974deab58dd
+Š
+Zapp/src/main/java/com/game/thecocktaillabs/presentation/homescreen/FloatingActionButton.kt,6\8\68341d54dd74214bd64f1da44377ff2dafa58b28
+„
+Tapp/src/main/java/com/game/thecocktaillabs/presentation/homescreen/HomeScreenData.kt,a\9\a9d09042ccd77647bbe58292a734025d0f334309
+~
+Napp/src/main/java/com/game/thecocktaillabs/presentation/homescreen/ItemCard.kt,9\9\9938383126d47a6d8e5cb2f202feece6065c3ba3
+j
+:app/src/main/java/com/game/thecocktaillabs/MainActivity.kt,5\1\519aed21b4efecd3454d4de41fdf6f1d7cd6aa09
+€
+Papp/src/main/java/com/game/thecocktaillabs/presentation/homescreen/HomeScreen.kt,6\9\69e982ac08e96a721dd6104e2d7495b480fc504a
+y
+Iapp/src/main/java/com/game/thecocktaillabs/presentation/ui/theme/Theme.kt,5\6\565aca2490879051792ac51f6d7f257d53aa81c9
+‰
+Yapp/src/main/java/com/game/thecocktaillabs/presentation/homescreen/HomeScreenViewModel.kt,c\9\c9d1a0bdd31d5e75733e3e89069b4f654265de8e

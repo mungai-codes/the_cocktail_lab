@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Chip
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
@@ -26,6 +28,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,8 +38,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,11 +51,17 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
-    normalSearch: (String) -> Unit,
+    query: String,
+    onQueryChanged: (String) -> Unit,
+    clearSearchQuery: () -> Unit,
+    normalSearch: () -> Unit,
     alcoholicSearch: (String) -> Unit,
     nonAlcoholicSearch: (String) -> Unit
 ) {
     val listItems = arrayOf("Normal Search", "Non-Alcoholic", "Alcoholic")
+
+
+    val focusManager = LocalFocusManager.current
 
     val randomItems = listOf(
         "magarita",
@@ -92,11 +104,12 @@ fun TopBar(
                 shape = RoundedCornerShape(10.dp),
                 elevation = 8.dp,
                 border = BorderStroke(1.dp, MaterialTheme.colors.primary),
-                color = MaterialTheme.colors.primary.copy(alpha = 0.5f)
+                color = MaterialTheme.colors.primary
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = selectedItem,
@@ -139,8 +152,8 @@ fun TopBar(
         when (selectedItem) {
             "Normal Search" -> {
                 OutlinedTextField(
-                    value = "",
-                    onValueChange = {},
+                    value = query.trim(),
+                    onValueChange = { onQueryChanged(it) },
                     placeholder = {
                         Text(
                             text = "Search cocktails",
@@ -149,10 +162,18 @@ fun TopBar(
                         )
                     },
                     leadingIcon = {
-                        IconButton(onClick = { normalSearch("") }) {
+                        IconButton(onClick = { normalSearch() }) {
                             Icon(
                                 imageVector = Icons.Rounded.Search,
                                 contentDescription = "recipe search"
+                            )
+                        }
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = { clearSearchQuery() }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Close,
+                                contentDescription = "clear the search field"
                             )
                         }
                     },
@@ -161,6 +182,19 @@ fun TopBar(
                         unfocusedBorderColor = MaterialTheme.colors.primary,
                         focusedBorderColor = MaterialTheme.colors.primary
                     ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Search
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onSearch = {
+                            normalSearch()
+                            focusManager.clearFocus(true)
+                        },
+                        onDone = {
+                            focusManager.clearFocus(true)
+                        }
+                    )
                 )
             }
 
