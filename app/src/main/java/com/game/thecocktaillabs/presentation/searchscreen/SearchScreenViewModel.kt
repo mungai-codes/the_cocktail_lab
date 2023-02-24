@@ -37,6 +37,8 @@ class SearchScreenViewModel @Inject constructor(
 
     init {
         loadCategories()
+        loadFilters()
+        loadGlassTypes()
     }
 
     fun normalSearch() {
@@ -70,10 +72,73 @@ class SearchScreenViewModel @Inject constructor(
                 }.launchIn(this)
         }
     }
+
     fun categorySearch(category: String) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             repository.searchCocktailsByCategory(category).onEach { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _uiState.update { it.copy(isLoading = true) }
+                    }
+
+                    is Resource.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                drinks = result.data ?: emptyList()
+                            )
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _uiState.update { it.copy(isLoading = false, error = result.message) }
+                        _eventFlow.emit(
+                            UiEvent.ShowSnackBar(
+                                _uiState.value.error ?: "An unexpected error occurred"
+                            )
+                        )
+                    }
+                }
+            }.launchIn(this)
+        }
+    }
+
+    fun alcoholFilterSearch(filter: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            repository.searchCocktailsByAlcoholFilter(filter).onEach { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _uiState.update { it.copy(isLoading = true) }
+                    }
+
+                    is Resource.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                drinks = result.data ?: emptyList()
+                            )
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _uiState.update { it.copy(isLoading = false, error = result.message) }
+                        _eventFlow.emit(
+                            UiEvent.ShowSnackBar(
+                                _uiState.value.error ?: "An unexpected error occurred"
+                            )
+                        )
+                    }
+                }
+            }.launchIn(this)
+        }
+    }
+
+    fun glassTypeSearch(glassType: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            repository.searchCocktailsByGlassType(glassType).onEach { result ->
                 when (result) {
                     is Resource.Loading -> {
                         _uiState.update { it.copy(isLoading = true) }
@@ -122,6 +187,76 @@ class SearchScreenViewModel @Inject constructor(
                         _uiState.update {
                             it.copy(
                                 loadingCategories = false,
+                                error = result.message
+                            )
+                        }
+                        _eventFlow.emit(
+                            UiEvent.ShowSnackBar(
+                                _uiState.value.error ?: "An unexpected error occurred"
+                            )
+                        )
+                    }
+                }
+            }.launchIn(this)
+        }
+    }
+
+    private fun loadFilters() {
+        viewModelScope.launch(ioDispatcher) {
+            repository.getAlcoholFilters().onEach { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _uiState.update { it.copy(loadingFilters = true) }
+                    }
+
+                    is Resource.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                loadingFilters = false,
+                                filters = result.data ?: emptyList()
+                            )
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _uiState.update {
+                            it.copy(
+                                loadingFilters = false,
+                                error = result.message
+                            )
+                        }
+                        _eventFlow.emit(
+                            UiEvent.ShowSnackBar(
+                                _uiState.value.error ?: "An unexpected error occurred"
+                            )
+                        )
+                    }
+                }
+            }.launchIn(this)
+        }
+    }
+
+    private fun loadGlassTypes() {
+        viewModelScope.launch(ioDispatcher) {
+            repository.getGlassTypes().onEach { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _uiState.update { it.copy(loadingGlassTypes = true) }
+                    }
+
+                    is Resource.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                loadingGlassTypes = false,
+                                glasses = result.data ?: emptyList()
+                            )
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _uiState.update {
+                            it.copy(
+                                loadingGlassTypes = false,
                                 error = result.message
                             )
                         }

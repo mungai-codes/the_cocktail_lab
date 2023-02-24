@@ -57,11 +57,13 @@ fun SearchScreen(
         topBar = {
             TopBar(
                 categorySearch = viewModel::categorySearch,
-                nonAlcoholicSearch = {},
+                alcoholFilterSearch = viewModel::alcoholFilterSearch,
+                glassTypeSearch = viewModel::glassTypeSearch,
                 normalSearch = { viewModel.normalSearch() },
                 query = state.query,
-                category = state.categories,
-                loadingCategories = state.loadingCategories,
+                categories = state.categories,
+                filters = state.filters,
+                glassTypes = state.glasses,
                 onQueryChanged = viewModel::updateQuery,
                 clearSearchQuery = viewModel::clearSearchQuery
             )

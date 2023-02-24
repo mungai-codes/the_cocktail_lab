@@ -6,6 +6,8 @@ import com.game.thecocktaillabs.data.local.TheCocktailLabDatabase
 import com.game.thecocktaillabs.data.remote.TheCocktailDbApiService
 import com.game.thecocktaillabs.domain.model.Category
 import com.game.thecocktaillabs.domain.model.Drink
+import com.game.thecocktaillabs.domain.model.Filter
+import com.game.thecocktaillabs.domain.model.Glass
 import com.game.thecocktaillabs.domain.repository.TheCocktailLabRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -83,6 +85,98 @@ class TheCocktailLabRepositoryImpl @Inject constructor(
         }.catch { e ->
             e.printStackTrace()
             emit(Resource.Error(message = "$category category does not exist!!"))
+        }
+    }
+
+    override fun getAlcoholFilters(): Flow<Resource<List<Filter>>> {
+        return flow {
+            emit(Resource.Loading())
+
+            val localFilters = dao.getAlcoholFilters()
+
+            if (localFilters.isEmpty()) {
+                try {
+                    val response =
+                        apiService.getAlcoholFilters().drinks.map { it.toFilterEntity() }
+                    dao.insertAlcoholFilters(response)
+                    emit(Resource.Success(data = response.map { it.toFilter() }))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    emit(Resource.Error(message = e.localizedMessage))
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+                    emit(Resource.Error(message = e.message()))
+                }
+            } else {
+                emit(Resource.Success(data = localFilters.map { it.toFilter() }))
+            }
+        }.catch { e ->
+            e.printStackTrace()
+            emit(Resource.Error(message = e.localizedMessage))
+        }
+    }
+
+    override fun searchCocktailsByAlcoholFilter(filter: String): Flow<Resource<List<Drink>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result =
+                    apiService.searchCocktailsByAlcoholFilter(filter).drinks.map { it.toDrink() }
+                emit(Resource.Success(result))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.message()))
+            } catch (e: IOException) {
+                emit(Resource.Error(message = e.localizedMessage))
+            }
+        }.catch { e ->
+            e.printStackTrace()
+            emit(Resource.Error(message = "This $filter filter is not available."))
+        }
+    }
+
+    override fun getGlassTypes(): Flow<Resource<List<Glass>>> {
+        return flow {
+            emit(Resource.Loading())
+
+            val localFilters = dao.getGlassTypes()
+
+            if (localFilters.isEmpty()) {
+                try {
+                    val response =
+                        apiService.getGlassTypes().drinks.map { it.toGlassEntity() }
+                    dao.insertGlassTypes(response)
+                    emit(Resource.Success(data = response.map { it.toGlass() }))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    emit(Resource.Error(message = e.localizedMessage))
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+                    emit(Resource.Error(message = e.message()))
+                }
+            } else {
+                emit(Resource.Success(data = localFilters.map { it.toGlass() }))
+            }
+        }.catch { e ->
+            e.printStackTrace()
+            emit(Resource.Error(message = e.localizedMessage))
+        }
+    }
+
+    override fun searchCocktailsByGlassType(glassType: String): Flow<Resource<List<Drink>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val result =
+                    apiService.searchCocktailByGlassType(glassType).drinks.map { it.toDrink() }
+                emit(Resource.Success(result))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.message()))
+            } catch (e: IOException) {
+                emit(Resource.Error(message = e.localizedMessage))
+            }
+        }.catch { e ->
+            e.printStackTrace()
+            emit(Resource.Error(message = "This $glassType glass type is not available."))
         }
     }
 }

@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Chip
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
@@ -47,36 +46,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.game.thecocktaillabs.domain.model.Category
+import com.game.thecocktaillabs.domain.model.Filter
+import com.game.thecocktaillabs.domain.model.Glass
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
     query: String,
-    category: List<Category>,
-    loadingCategories: Boolean,
+    categories: List<Category>,
+    filters: List<Filter>,
+    glassTypes: List<Glass>,
     onQueryChanged: (String) -> Unit,
     clearSearchQuery: () -> Unit,
     normalSearch: () -> Unit,
     categorySearch: (String) -> Unit,
-    nonAlcoholicSearch: (String) -> Unit
+    alcoholFilterSearch: (String) -> Unit,
+    glassTypeSearch: (String) -> Unit
 ) {
-    val listItems = arrayOf("Normal Search", "By Alcohol", "By Category")
-
+    val listItems = arrayOf("Normal Search", "By Category", "By Alcohol Filter", "By Glass Type")
 
     val focusManager = LocalFocusManager.current
-
-    val randomItems = listOf(
-        "magarita",
-        "vodka",
-        "guarana",
-        "Schnapps",
-        "four cousins",
-        "gibleys",
-        "konyagi",
-        "tusker cider",
-        "blue moon vodka"
-    )
 
     var selectedItem by remember {
         mutableStateOf(listItems[0])
@@ -205,21 +195,44 @@ fun TopBar(
                 )
             }
 
-            "By Alcohol" -> {
+            "By Alcohol Filter" -> {
+                LazyRow(
+                    modifier = Modifier,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    contentPadding = PaddingValues(horizontal = 20.dp),
+                ) {
+                    items(filters) { filter ->
+                        Chip(onClick = { alcoholFilterSearch(filter.strAlcoholic) }) {
+
+                            Text(
+                                text = filter.strAlcoholic,
+                                fontFamily = FontFamily.SansSerif,
+                                color = MaterialTheme.colors.primary,
+                                fontWeight = FontWeight.SemiBold
+                            )
+
+                        }
+                    }
+                }
+            }
+
+            "By Glass Type" -> {
 
                 LazyRow(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     contentPadding = PaddingValues(horizontal = 20.dp),
                 ) {
-                    items(randomItems.shuffled()) { item ->
-                        Chip(onClick = { nonAlcoholicSearch(item) }) {
+                    items(glassTypes) { glassType ->
+                        Chip(onClick = { glassTypeSearch(glassType.strGlass) }) {
+
                             Text(
-                                text = item,
+                                text = glassType.strGlass,
                                 fontFamily = FontFamily.SansSerif,
                                 color = MaterialTheme.colors.primary,
                                 fontWeight = FontWeight.SemiBold
                             )
+
                         }
                     }
                 }
@@ -232,18 +245,16 @@ fun TopBar(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     contentPadding = PaddingValues(horizontal = 20.dp),
                 ) {
-                    items(category) { category ->
+                    items(categories) { category ->
                         Chip(onClick = { categorySearch(category.strCategory) }) {
-                            if (loadingCategories) {
-                                CircularProgressIndicator()
-                            } else {
-                                Text(
-                                    text = category.strCategory,
-                                    fontFamily = FontFamily.SansSerif,
-                                    color = MaterialTheme.colors.primary,
-                                    fontWeight = FontWeight.SemiBold
-                                )
-                            }
+
+                            Text(
+                                text = category.strCategory,
+                                fontFamily = FontFamily.SansSerif,
+                                color = MaterialTheme.colors.primary,
+                                fontWeight = FontWeight.SemiBold
+                            )
+
                         }
                     }
                 }
