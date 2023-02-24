@@ -1,7 +1,7 @@
 package com.game.thecocktaillabs.presentation.homescreen
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideIn
@@ -42,10 +42,10 @@ fun FabButton(
     ) {
         AnimatedVisibility(
             visible = isCollapsed,
-            enter = slideIn(tween(1000, easing = LinearOutSlowInEasing)) {
+            enter = slideIn(animationSpec = tween(500, easing = LinearOutSlowInEasing)) {
                 IntOffset(0, 500)
             },
-            exit = slideOut(tween(1000, easing = FastOutSlowInEasing)) {
+            exit = slideOut(tween(500, easing = FastOutLinearInEasing)) {
                 IntOffset(0, 500)
             },
         ) {

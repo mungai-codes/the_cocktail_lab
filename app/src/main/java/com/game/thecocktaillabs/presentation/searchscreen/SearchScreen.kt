@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun SearchScreen(
     navController: NavController,
-    viewModel: SearchScreenVieModel = hiltViewModel()
+    viewModel: SearchScreenViewModel = hiltViewModel()
 ) {
 
     val scaffoldState = rememberScaffoldState()
@@ -56,10 +56,12 @@ fun SearchScreen(
         scaffoldState = scaffoldState,
         topBar = {
             TopBar(
-                alcoholicSearch = {},
+                categorySearch = viewModel::categorySearch,
                 nonAlcoholicSearch = {},
                 normalSearch = { viewModel.normalSearch() },
                 query = state.query,
+                category = state.categories,
+                loadingCategories = state.loadingCategories,
                 onQueryChanged = viewModel::updateQuery,
                 clearSearchQuery = viewModel::clearSearchQuery
             )

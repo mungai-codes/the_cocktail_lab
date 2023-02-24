@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Chip
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
@@ -37,7 +38,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -46,19 +46,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.game.thecocktaillabs.domain.model.Category
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
     query: String,
+    category: List<Category>,
+    loadingCategories: Boolean,
     onQueryChanged: (String) -> Unit,
     clearSearchQuery: () -> Unit,
     normalSearch: () -> Unit,
-    alcoholicSearch: (String) -> Unit,
+    categorySearch: (String) -> Unit,
     nonAlcoholicSearch: (String) -> Unit
 ) {
-    val listItems = arrayOf("Normal Search", "Non-Alcoholic", "Alcoholic")
+    val listItems = arrayOf("Normal Search", "By Alcohol", "By Category")
 
 
     val focusManager = LocalFocusManager.current
@@ -109,7 +112,8 @@ fun TopBar(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                 ) {
                     Text(
                         text = selectedItem,
@@ -119,9 +123,11 @@ fun TopBar(
                             .padding(start = 16.dp),
                         color = MaterialTheme.colors.onSurface
                     )
-                    IconButton(onClick = { }) {
+                    IconButton(
+                        onClick = { }
+                    ) {
                         ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded = expanded
+                            expanded = expanded,
                         )
                     }
                 }
@@ -143,7 +149,7 @@ fun TopBar(
                             text = selectedOption,
                             fontFamily = FontFamily.SansSerif,
                             textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
                         )
                     }
                 }
@@ -158,7 +164,7 @@ fun TopBar(
                         Text(
                             text = "Search cocktails",
                             fontSize = 12.sp,
-                            color = Color.LightGray
+                            color = MaterialTheme.colors.onSurface
                         )
                     },
                     leadingIcon = {
@@ -180,7 +186,8 @@ fun TopBar(
                     shape = RoundedCornerShape(16.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         unfocusedBorderColor = MaterialTheme.colors.primary,
-                        focusedBorderColor = MaterialTheme.colors.primary
+                        focusedBorderColor = MaterialTheme.colors.primary,
+                        textColor = MaterialTheme.colors.onSurface
                     ),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
@@ -198,7 +205,7 @@ fun TopBar(
                 )
             }
 
-            "Non-Alcoholic" -> {
+            "By Alcohol" -> {
 
                 LazyRow(
                     modifier = Modifier,
@@ -210,27 +217,33 @@ fun TopBar(
                             Text(
                                 text = item,
                                 fontFamily = FontFamily.SansSerif,
-                                color = MaterialTheme.colors.onSurface
+                                color = MaterialTheme.colors.primary,
+                                fontWeight = FontWeight.SemiBold
                             )
                         }
                     }
                 }
             }
 
-            "Alcoholic" -> {
+            "By Category" -> {
 
                 LazyRow(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     contentPadding = PaddingValues(horizontal = 20.dp),
                 ) {
-                    items(randomItems.shuffled().take(5)) { item ->
-                        Chip(onClick = { alcoholicSearch(item) }) {
-                            Text(
-                                text = item,
-                                fontFamily = FontFamily.SansSerif,
-                                color = MaterialTheme.colors.onSurface
-                            )
+                    items(category) { category ->
+                        Chip(onClick = { categorySearch(category.strCategory) }) {
+                            if (loadingCategories) {
+                                CircularProgressIndicator()
+                            } else {
+                                Text(
+                                    text = category.strCategory,
+                                    fontFamily = FontFamily.SansSerif,
+                                    color = MaterialTheme.colors.primary,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
                         }
                     }
                 }
