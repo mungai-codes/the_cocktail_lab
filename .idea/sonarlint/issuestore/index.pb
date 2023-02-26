@@ -1,10 +1,6 @@
 
 x
 Happ/src/main/java/com/game/thecocktaillabs/presentation/ui/theme/Type.kt,5\2\52a2d83cb8bf7d09939ffc58061bddd5f85d0b83
-<
-build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 l
 <app/src/main/java/com/game/thecocktaillabs/TheCocktailLab.kt,0\1\01e181d837b5574e8214cbeb4c4b038e11d06c36
 y
@@ -67,8 +63,6 @@ l
 Papp/src/main/java/com/game/thecocktaillabs/presentation/homescreen/HomeScreen.kt,6\9\69e982ac08e96a721dd6104e2d7495b480fc504a
 †
 Vapp/src/main/java/com/game/thecocktaillabs/presentation/searchscreen/ResultItemCard.kt,6\f\6f9f6180b436490036a83d9994869f1300a4d7a2
-j
-:app/src/main/java/com/game/thecocktaillabs/MainActivity.kt,5\1\519aed21b4efecd3454d4de41fdf6f1d7cd6aa09
 ‰
 Yapp/src/main/java/com/game/thecocktaillabs/presentation/homescreen/HomeScreenViewModel.kt,c\9\c9d1a0bdd31d5e75733e3e89069b4f654265de8e
 j
@@ -123,3 +117,5 @@ z
 Japp/src/main/java/com/game/thecocktaillabs/data/local/TheCockTailLabDao.kt,2\4\24b21ca8fe0a08777d1fdf0e7c011ea98cc563e1
 ˆ
 Xapp/src/main/java/com/game/thecocktaillabs/domain/repository/TheCocktailLabRepository.kt,b\6\b672ef8a49e7abb83a11aa1cf61df1d8ccd0fb8c
+y
+Iapp/src/main/java/com/game/thecocktaillabs/data/remote/dto/CategoryDto.kt,3\5\350731447ff0ffe4c6578db34ec3df1c1e27ca84
