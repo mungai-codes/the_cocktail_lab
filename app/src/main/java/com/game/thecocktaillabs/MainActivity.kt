@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
 
             val appSettings = datastore.data.collectAsState(initial = AppSettings()).value
 
-
             val isDarkTheme = when (appSettings.theme) {
                 Theme.DARK -> {
                     true
@@ -35,6 +34,7 @@ class MainActivity : ComponentActivity() {
                     false
                 }
             }
+
             TheCocktailLabsTheme(darkTheme = isDarkTheme) {
                 // A surface container using the 'background' color from the theme
                 NavGraph(navController = rememberNavController())
