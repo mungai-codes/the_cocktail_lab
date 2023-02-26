@@ -21,7 +21,6 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -32,7 +31,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TopBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSettingsClick: () -> Unit
 ) {
 
 
@@ -57,7 +57,7 @@ fun TopBar(
                 fontSize = 20.sp,
                 color = MaterialTheme.colors.onSurface
             )
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = onSettingsClick) {
                 Icon(
                     imageVector = Icons.Outlined.Settings,
                     contentDescription = "App Settings",
@@ -88,7 +88,7 @@ fun TopBar(
                     }
                 },
                 trailingIcon = {
-                    IconButton(onClick = {  }) {
+                    IconButton(onClick = { }) {
                         Icon(
                             imageVector = Icons.Rounded.Close,
                             contentDescription = "clear the search field"

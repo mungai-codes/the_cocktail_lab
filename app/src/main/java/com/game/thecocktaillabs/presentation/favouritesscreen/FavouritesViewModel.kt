@@ -7,5 +7,5 @@ import javax.inject.Inject
 @HiltViewModel
 class FavouritesViewModel @Inject constructor(
 
-): ViewModel() {
+) : ViewModel() {
 }

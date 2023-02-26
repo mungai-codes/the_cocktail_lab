@@ -10,23 +10,32 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.game.thecocktaillabs.presentation.navigation.Screen
+import com.game.thecocktaillabs.presentation.settingsdrawer.Settings
 import com.game.thecocktaillabs.presentation.ui.theme.TheCocktailLabsTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(navController: NavController) {
 
     val scaffoldState = rememberScaffoldState()
 
+    val scope = rememberCoroutineScope()
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopBar()
+            TopBar {
+                scope.launch {
+                    scaffoldState.drawerState.open()
+                }
+            }
         },
         floatingActionButton = {
             FabButton(
@@ -34,6 +43,11 @@ fun HomeScreen(navController: NavController) {
                 favouritesButtonClicked = { navController.navigate(Screen.FavouritesScreen.route) },
                 searchButtonClicked = { navController.navigate(Screen.SearchScreen.route) }
             )
+        },
+        //enable dragging only when the drawer is open
+        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+        drawerContent = {
+            Settings()
         }
     ) { innerPadding ->
         Column(

@@ -1,7 +1,6 @@
 package com.game.thecocktaillabs.data.remote.dto
 
 import com.game.thecocktaillabs.data.local.entity.GlassEntity
-import com.game.thecocktaillabs.domain.model.Glass
 import com.squareup.moshi.Json
 
 data class GlassDto(
@@ -11,7 +10,7 @@ data class GlassDto(
 
     fun toGlassEntity(): GlassEntity {
         return GlassEntity(
-           glassType = strGlass
+            glassType = strGlass
         )
     }
 }

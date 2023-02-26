@@ -106,7 +106,7 @@ data class DrinkDto(
     @field:Json(name = "strVideo")
     val strVideo: String?
 ) {
-    fun toCategorySearchDto() : CategorySearchDto {
+    fun toCategorySearchDto(): CategorySearchDto {
         return CategorySearchDto(
             idDrink = idDrink,
             strDrink = strDrink,

@@ -26,13 +26,13 @@ interface TheCocktailDbApiService {
     suspend fun getGlassTypes(): GlassResponse
 
     @GET("filter.php")
-    suspend fun searchCocktailByGlassType(@Query("g") glassType: String) : GlassTypeSearchResponse
+    suspend fun searchCocktailByGlassType(@Query("g") glassType: String): GlassTypeSearchResponse
 
     @GET("list.php?a=list")
     suspend fun getAlcoholFilters(): FilterResponse
 
     @GET("filter.php")
-    suspend fun searchCocktailsByAlcoholFilter(@Query("a") filter: String) : AlcoholFilterSearchResponse
+    suspend fun searchCocktailsByAlcoholFilter(@Query("a") filter: String): AlcoholFilterSearchResponse
 
 
 }

@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,44 +34,52 @@ fun ThemeItem(
     ) {
         Text(
             text = "Theme",
-            fontFamily = FontFamily.SansSerif,
-            fontSize = 40.sp,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Start,
-            color = MaterialTheme.colors.onPrimary
+            style = TextStyle(
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 40.sp,
+                fontWeight = FontWeight.SemiBold
+            ),
+            textAlign = TextAlign.Start
         )
-        Divider(thickness = 3.dp, color = MaterialTheme.colors.onPrimary)
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Dark Theme:",
+        Divider(thickness = 3.dp, color = MaterialTheme.colors.primary)
+        ThemeSwitch(
+            label = "Dark Theme",
+            checked = isDarkThemeChecked,
+            onCheckedChange = setDarkThemeOn
+        )
+        ThemeSwitch(
+            label = "Light Theme",
+            checked = isLightThemeChecked,
+            onCheckedChange = setLightThemeOn
+        )
+    }
+}
+
+@Composable
+fun ThemeSwitch(
+    label: String,
+    checked: Boolean,
+    onCheckedChange: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = label,
+            style = TextStyle(
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 30.sp
             )
-            Switch(
-                checked = isDarkThemeChecked,
-                onCheckedChange = { setDarkThemeOn() },
-                modifier = Modifier.scale(1.5f)
+        )
+        Switch(
+            checked = checked,
+            onCheckedChange = { onCheckedChange() },
+            modifier = Modifier.scale(1.5f),
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = MaterialTheme.colors.primary
             )
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Light Theme:",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 30.sp
-            )
-            Switch(
-                checked = isLightThemeChecked,
-                onCheckedChange = { setLightThemeOn() },
-                modifier = Modifier.scale(1.5f)
-            )
-        }
+        )
     }
 }

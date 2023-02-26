@@ -1,7 +1,6 @@
 package com.game.thecocktaillabs.data.local.entity
 
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.game.thecocktaillabs.domain.model.Category
 

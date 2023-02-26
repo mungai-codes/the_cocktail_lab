@@ -50,7 +50,7 @@ fun CocktailDetails(
                         .height(40.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
-                    Text(text = it) 
+                    Text(text = it)
                 }
             }
         }

@@ -14,14 +14,14 @@ interface TheCocktailLabRepository {
 
     fun getCocktailCategories(): Flow<Resource<List<Category>>>
 
-    fun searchCocktailsByCategory(category: String) : Flow<Resource<List<Drink>>>
+    fun searchCocktailsByCategory(category: String): Flow<Resource<List<Drink>>>
 
     fun getAlcoholFilters(): Flow<Resource<List<Filter>>>
 
-    fun searchCocktailsByAlcoholFilter(filter: String) : Flow<Resource<List<Drink>>>
+    fun searchCocktailsByAlcoholFilter(filter: String): Flow<Resource<List<Drink>>>
 
     fun getGlassTypes(): Flow<Resource<List<Glass>>>
 
-    fun searchCocktailsByGlassType(glassType: String) : Flow<Resource<List<Drink>>>
+    fun searchCocktailsByGlassType(glassType: String): Flow<Resource<List<Drink>>>
 
 }

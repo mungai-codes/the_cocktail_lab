@@ -1,20 +1,14 @@
 package com.game.thecocktaillabs.data.datastore
 
 import androidx.datastore.core.Serializer
-import com.game.thecocktaillabs.di.IoDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import java.io.InputStream
 import java.io.OutputStream
-import javax.inject.Inject
 
 object AppSettingsSerializer : Serializer<AppSettings> {
-
-    @Inject
-    @IoDispatcher
-    lateinit var ioDispatcher: CoroutineDispatcher
 
     override val defaultValue: AppSettings
         get() = AppSettings()
@@ -32,13 +26,15 @@ object AppSettingsSerializer : Serializer<AppSettings> {
     }
 
     override suspend fun writeTo(t: AppSettings, output: OutputStream) {
-        withContext(ioDispatcher) {
+        withContext(Dispatchers.IO) {
             output.write(
                 Json.encodeToString(
                     serializer = AppSettings.serializer(),
                     value = t
                 ).encodeToByteArray()
             )
+            output.flush()
         }
     }
+
 }

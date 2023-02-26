@@ -7,7 +7,7 @@ data class CategoryDto(
     @field:Json(name = "strCategory")
     val strCategory: String
 ) {
-    fun toCategoryEntity() : CategoryEntity {
+    fun toCategoryEntity(): CategoryEntity {
         return CategoryEntity(
             strCategory = strCategory
         )
