@@ -179,4 +179,24 @@ class TheCocktailLabRepositoryImpl @Inject constructor(
             emit(Resource.Error(message = "This $glassType glass type is not available."))
         }
     }
+
+    override fun lookupCocktailDetailsById(cocktailId: String): Flow<Resource<List<Drink>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val response =
+                    apiService.lookupCocktailDetailsById(cocktailId).drinks.map { it.toDrink() }
+                emit(Resource.Success(response))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.message()))
+            } catch (e: IOException) {
+                emit(Resource.Error(message = e.localizedMessage))
+            }
+        }.catch { e ->
+            e.printStackTrace()
+            emit(Resource.Error(message = "an ${e.message} error occurred"))
+        }
+    }
+
+
 }

@@ -2,8 +2,11 @@ package com.game.thecocktaillabs.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.game.thecocktaillabs.presentation.cocktaildetailsscreen.CocktailDetailsScreen
 import com.game.thecocktaillabs.presentation.favouritesscreen.FavouritesScreen
 import com.game.thecocktaillabs.presentation.homescreen.HomeScreen
 import com.game.thecocktaillabs.presentation.searchscreen.SearchScreen
@@ -17,8 +20,17 @@ fun NavGraph(navController: NavHostController) {
         composable(Screen.FavouritesScreen.route) {
             FavouritesScreen(navController = navController)
         }
-        composable(Screen.SearchScreen.route) {
+        composable(route = Screen.SearchScreen.route) {
             SearchScreen(navController = navController)
+        }
+        composable(
+            route = Screen.DetailsScreen.route + "?cocktailId={cocktailId}",
+            arguments = listOf(
+                navArgument(name = "cocktailId") {
+                    type = NavType.StringType
+                }
+            )) {
+            CocktailDetailsScreen(navController = navController)
         }
     }
 }

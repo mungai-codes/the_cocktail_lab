@@ -106,7 +106,9 @@ fun SearchScreen(
             ) {
 
                 items(state.drinks) { cocktail ->
-                    ResultItemCard(drink = cocktail)
+                    ResultItemCard(drink = cocktail) {
+                        navController.navigate(route = Screen.DetailsScreen.route + "?cocktailId=${cocktail.idDrink}")
+                    }
                 }
 
             }

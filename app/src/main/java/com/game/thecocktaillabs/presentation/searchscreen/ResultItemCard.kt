@@ -1,6 +1,7 @@
 package com.game.thecocktaillabs.presentation.searchscreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -31,11 +32,13 @@ import com.game.thecocktaillabs.domain.model.Drink
 @Composable
 fun ResultItemCard(
     modifier: Modifier = Modifier,
-    drink: Drink
+    drink: Drink,
+    onCocktailClick: () -> Unit
 ) {
     Surface(
         modifier = modifier
-            .height(140.dp),
+            .height(140.dp)
+            .clickable { drink.idDrink?.let { onCocktailClick() } },
         elevation = 8.dp,
         shape = RoundedCornerShape(10.dp)
     ) {

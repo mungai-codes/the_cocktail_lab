@@ -24,4 +24,6 @@ interface TheCocktailLabRepository {
 
     fun searchCocktailsByGlassType(glassType: String): Flow<Resource<List<Drink>>>
 
+    fun lookupCocktailDetailsById(cocktailId: String): Flow<Resource<List<Drink>>>
+
 }

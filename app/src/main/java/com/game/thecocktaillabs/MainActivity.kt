@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.datastore.dataStore
 import androidx.navigation.compose.rememberNavController
@@ -21,6 +22,7 @@ val Context.datastore by dataStore("app_settings.json", AppSettingsSerializer)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
 
             val appSettings = datastore.data.collectAsState(initial = AppSettings()).value
@@ -29,7 +31,6 @@ class MainActivity : ComponentActivity() {
                 Theme.DARK -> {
                     true
                 }
-
                 Theme.LIGHT -> {
                     false
                 }
