@@ -32,6 +32,9 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
+    query: String,
+    updateQuery: (String) -> Unit,
+    onSearchClicked: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
 
@@ -70,8 +73,8 @@ fun TopBar(
                 .fillMaxWidth()
         ) {
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = query,
+                onValueChange = { updateQuery(it) },
                 placeholder = {
                     Text(
                         text = "Search cocktails",
@@ -80,7 +83,7 @@ fun TopBar(
                     )
                 },
                 leadingIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { onSearchClicked() }) {
                         Icon(
                             imageVector = Icons.Rounded.Search,
                             contentDescription = "recipe search"
@@ -107,7 +110,7 @@ fun TopBar(
                 ),
                 keyboardActions = KeyboardActions(
                     onSearch = {
-                        /*ToDo*/
+                        onSearchClicked()
                         focusManager.clearFocus(true)
                     },
                     onDone = {

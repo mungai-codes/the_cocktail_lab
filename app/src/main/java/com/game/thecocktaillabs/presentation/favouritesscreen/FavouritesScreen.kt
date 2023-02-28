@@ -23,7 +23,7 @@ fun FavouritesScreen(navController: NavController) {
         floatingActionButton = {
             FabButton(
                 homeButtonClicked = { navController.navigate(Screen.HomeScreen.route) },
-                favouritesButtonClicked = { navController.navigate(Screen.FavouritesScreen.route) },
+                favouritesButtonClicked = { },
                 searchButtonClicked = { navController.navigate(Screen.SearchScreen.route) }
             )
         }

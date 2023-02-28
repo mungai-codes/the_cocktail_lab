@@ -12,11 +12,11 @@ private val darkColorScheme = darkColors(
     primaryVariant = Purple700,
     secondary = Teal200,
     background = Color(0xff121212),
-    surface = Color.White,
+    surface = Color.LightGray,
     onPrimary = Color.White,
     onSecondary = Color.Black,
     onBackground = Color.Black,
-    onSurface = Color(0xffffffff),
+    onSurface = Color(0xffffffff)
 )
 
 private val lightColorScheme = lightColors(

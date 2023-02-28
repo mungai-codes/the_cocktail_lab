@@ -20,7 +20,15 @@ fun NavGraph(navController: NavHostController) {
         composable(Screen.FavouritesScreen.route) {
             FavouritesScreen(navController = navController)
         }
-        composable(route = Screen.SearchScreen.route) {
+        composable(
+            route = Screen.SearchScreen.route + "?query={query}",
+            arguments = listOf(
+                navArgument(name = "query") {
+                    type = NavType.StringType
+                    defaultValue = "blank"
+                }
+            )
+        ) {
             SearchScreen(navController = navController)
         }
         composable(
@@ -28,6 +36,7 @@ fun NavGraph(navController: NavHostController) {
             arguments = listOf(
                 navArgument(name = "cocktailId") {
                     type = NavType.StringType
+                    defaultValue = ""
                 }
             )) {
             CocktailDetailsScreen(navController = navController)

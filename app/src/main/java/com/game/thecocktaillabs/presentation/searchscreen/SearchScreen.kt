@@ -72,7 +72,7 @@ fun SearchScreen(
             FabButton(
                 homeButtonClicked = { navController.navigate(Screen.HomeScreen.route) },
                 favouritesButtonClicked = { navController.navigate(Screen.FavouritesScreen.route) },
-                searchButtonClicked = { navController.navigate(Screen.SearchScreen.route) }
+                searchButtonClicked = {  }
             )
         }
     ) { innerPadding ->

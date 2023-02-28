@@ -4,13 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -49,6 +49,8 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.game.thecocktaillabs.R
+import com.game.thecocktaillabs.presentation.cocktaildetailsscreen.components.Ingredients
+import com.game.thecocktaillabs.presentation.cocktaildetailsscreen.components.Instructions
 import com.game.thecocktaillabs.presentation.ui.theme.TheCocktailLabsTheme
 import com.mungaicodes.tomesanctuary.util.UiEvent
 import kotlinx.coroutines.flow.collectLatest
@@ -87,144 +89,119 @@ fun CocktailDetailsScreen(
     Scaffold(
         scaffoldState = scaffoldState
     ) { innerPadding ->
-        if (!state.drink.isNullOrEmpty()) {
-            state.drink.forEach { drink ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = innerPadding.calculateTopPadding()),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1.5f),
-                        elevation = 8.dp,
-
-                        ) {
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            AsyncImage(
-                                model = ImageRequest.Builder(LocalContext.current)
-                                    .data(data = drink.strDrinkThumb)
-                                    .crossfade(true)
-                                    .placeholder(R.drawable.loading_img)
-                                    .error(R.drawable.ic_broken_image)
-                                    .build(),
-                                contentScale = ContentScale.FillBounds,
-                                modifier = Modifier.fillMaxSize(),
-                                contentDescription = drink.strDrink
-                            )
-                            IconButton(
-                                onClick = { isLiked = !isLiked },
-                                modifier = Modifier
-                                    .align(Alignment.TopEnd)
-                                    .padding(top = 8.dp, end = 8.dp)
-                            ) {
-                                Icon(
-                                    imageVector = favouriteStatus,
-                                    contentDescription = "favourite",
-                                    tint = tint,
-                                    modifier = Modifier.size(40.dp)
-                                )
-                            }
-                            Row(
-                                modifier = Modifier
-                                    .align(Alignment.BottomStart)
-                                    .fillMaxWidth()
-                                    .background(
-                                        brush = Brush.verticalGradient(
-                                            listOf(
-                                                Color.Transparent,
-                                                Color(0xFFFF9800).copy(alpha = 0.3f),
-                                                Color(0xFFC95252).copy(alpha = 0.4f),
-                                                Color(0xFF63A4D8).copy(alpha = 0.5f),
-                                            )
-                                        )
-                                    ),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                drink.strDrink?.let {
-                                    Text(
-                                        text = it,
-                                        fontFamily = FontFamily.SansSerif,
-                                        fontWeight = FontWeight.SemiBold,
-                                        color = Color(0xFFF4F4F4),
-                                        fontSize = 25.sp,
-                                        textAlign = TextAlign.Start,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Ellipsis,
-                                        modifier = Modifier
-                                            .padding(start = 8.dp)
-                                            .weight(1f)
-                                    )
-                                }
-                                IconButton(onClick = { /*TODO*/ }) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.SmartDisplay,
-                                        contentDescription = "youtube",
-                                        tint = Color(0xFFFE0000),
-                                        modifier = Modifier
-                                            .size(40.dp)
-                                            .padding(end = 8.dp)
-                                            .weight(1f)
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    IngredientDetails(
-                        modifier = Modifier.weight(1f),
-                        heading = "Ingredients",
-                        ingredients = drink.ingredients!!
-                    ) { data ->
-                        Surface(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(40.dp),
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            if (!data.ingredient.isNullOrBlank() && data.imageUrl != null) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(text = data.ingredient.length.toString())
-                                    Text(text = data.measure!!)
-                                    AsyncImage(
-                                        model = ImageRequest.Builder(LocalContext.current)
-                                            .data(data.imageUrl)
-                                            .crossfade(true)
-                                            .placeholder(R.drawable.loading_img)
-                                            .error(R.drawable.ic_broken_image)
-                                            .build(),
-                                        contentScale = ContentScale.Crop,
-                                        contentDescription = data.ingredient
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    Instructions(modifier = Modifier.weight(1f), heading = "Instructions") {
-                        Surface(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            drink.strInstructions?.let { Text(text = it) }
-                        }
-                    }
-
-                    if (state.loading) {
+        state.drink.forEach { drink ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = innerPadding.calculateTopPadding()),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (state.loading) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
                         CircularProgressIndicator()
                     }
+                }
 
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    elevation = 8.dp,
+                ) {
+                    Box {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(data = drink.strDrinkThumb)
+                                .crossfade(true)
+                                .placeholder(R.drawable.loading_img)
+                                .error(R.drawable.ic_broken_image)
+                                .build(),
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.FillBounds,
+                            contentDescription = drink.strDrink
+                        )
+                        IconButton(
+                            onClick = { isLiked = !isLiked },
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(top = 8.dp, end = 8.dp)
+                        ) {
+                            Icon(
+                                imageVector = favouriteStatus,
+                                contentDescription = "favourite",
+                                tint = tint,
+                                modifier = Modifier.size(40.dp)
+                            )
+                        }
+                        Row(
+                            modifier = Modifier
+                                .align(Alignment.BottomStart)
+                                .fillMaxWidth()
+                                .background(
+                                    brush = Brush.verticalGradient(
+                                        listOf(
+                                            Color.Transparent,
+                                            Color(0xFFFF9800).copy(alpha = 0.3f),
+                                            Color(0xFFC95252).copy(alpha = 0.4f),
+                                            Color(0xFF63A4D8).copy(alpha = 0.5f),
+                                        )
+                                    )
+                                ),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            drink.strDrink?.let {
+                                Text(
+                                    text = it,
+                                    fontFamily = FontFamily.SansSerif,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFFF4F4F4),
+                                    fontSize = 25.sp,
+                                    textAlign = TextAlign.Start,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier
+                                        .padding(start = 8.dp)
+                                        .weight(1f)
+                                )
+                            }
+                            IconButton(onClick = { /*TODO*/ }) {
+                                Icon(
+                                    imageVector = Icons.Outlined.SmartDisplay,
+                                    contentDescription = "youtube",
+                                    tint = Color(0xFFFE0000),
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .padding(end = 8.dp)
+                                        .weight(1f)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                LazyColumn(
+                    modifier = Modifier.weight(2f),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(horizontal = 20.dp)
+                ) {
+
+                    item {
+                        drink.ingredients?.let { Ingredients(ingredients = it) }
+                    }
+
+                    item {
+                        drink.strInstructions?.let { Instructions(instructions = it) }
+                    }
                 }
             }
         }
     }
+
 }
 
 @Preview(showBackground = true)

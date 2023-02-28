@@ -148,7 +148,7 @@ fun TopBar(
         when (selectedItem) {
             "Normal Search" -> {
                 OutlinedTextField(
-                    value = query.trim(),
+                    value = query,
                     onValueChange = { onQueryChanged(it) },
                     placeholder = {
                         Text(

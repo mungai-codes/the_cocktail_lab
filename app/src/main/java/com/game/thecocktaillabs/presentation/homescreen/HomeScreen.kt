@@ -10,10 +10,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.game.thecocktaillabs.presentation.navigation.Screen
@@ -22,16 +24,25 @@ import com.game.thecocktaillabs.presentation.ui.theme.TheCocktailLabsTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hiltViewModel()) {
 
     val scaffoldState = rememberScaffoldState()
 
     val scope = rememberCoroutineScope()
 
+    val state = viewModel.uiState.collectAsState().value
+
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopBar {
+            TopBar(
+                query = state.query,
+                updateQuery = viewModel::updateQuerry,
+                onSearchClicked = {
+                    navController.navigate(Screen.SearchScreen.route + "?query=${state.query}")
+                }
+            ) {
                 scope.launch {
                     scaffoldState.drawerState.open()
                 }
@@ -39,7 +50,7 @@ fun HomeScreen(navController: NavController) {
         },
         floatingActionButton = {
             FabButton(
-                homeButtonClicked = { navController.navigate(Screen.HomeScreen.route) },
+                homeButtonClicked = {  },
                 favouritesButtonClicked = { navController.navigate(Screen.FavouritesScreen.route) },
                 searchButtonClicked = { navController.navigate(Screen.SearchScreen.route) }
             )

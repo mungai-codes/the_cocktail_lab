@@ -1,5 +1,6 @@
 package com.game.thecocktaillabs.presentation.searchscreen
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.game.thecocktaillabs.common.Resource
@@ -23,7 +24,8 @@ import javax.inject.Inject
 class SearchScreenViewModel @Inject constructor(
     private val repository: TheCocktailLabRepository,
     @IoDispatcher
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
 
@@ -39,6 +41,14 @@ class SearchScreenViewModel @Inject constructor(
         loadCategories()
         loadFilters()
         loadGlassTypes()
+        savedStateHandle.get<String>("query")?.let { query ->
+            if (query != "blank") {
+                viewModelScope.launch {
+                    _uiState.update { it.copy(query = query) }
+                    normalSearch()
+                }
+            }
+        }
     }
 
     fun normalSearch() {
