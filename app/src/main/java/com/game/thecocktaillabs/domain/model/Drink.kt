@@ -1,6 +1,7 @@
 package com.game.thecocktaillabs.domain.model
 
 import com.game.thecocktaillabs.common.Ingredient
+import com.game.thecocktaillabs.data.local.entity.FavouriteCocktailEntity
 
 data class Drink(
     val idDrink: String?,
@@ -25,4 +26,15 @@ data class Drink(
     val strCreativeCommonsConfirmed: String?,
     val dateModified: String?,
     val ingredients: List<Ingredient>?
-)
+) {
+    fun toFavouriteCocktalEntity(): FavouriteCocktailEntity {
+        return FavouriteCocktailEntity(
+            idDrink!!,
+            strAlcoholic,
+            strCategory,
+            strDrinkThumb,
+            strDrink,
+            strVideo
+        )
+    }
+}

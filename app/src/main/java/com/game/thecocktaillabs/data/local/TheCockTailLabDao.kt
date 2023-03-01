@@ -1,10 +1,12 @@
 package com.game.thecocktaillabs.data.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.game.thecocktaillabs.data.local.entity.CategoryEntity
+import com.game.thecocktaillabs.data.local.entity.FavouriteCocktailEntity
 import com.game.thecocktaillabs.data.local.entity.FilterEntity
 import com.game.thecocktaillabs.data.local.entity.GlassEntity
 
@@ -43,5 +45,17 @@ interface TheCockTailLabDao {
 
     @Query("DELETE from glass_types")
     suspend fun clearGlassTypes()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCocktailToFavourites(cocktail: FavouriteCocktailEntity)
+
+    @Query("SELECT * from favourite_cocktails")
+    suspend fun getFavouriteCocktails(): List<FavouriteCocktailEntity>
+
+    @Query("SELECT * from favourite_cocktails where idDrink = :drinkId")
+    suspend fun getCocktailById(drinkId: String): FavouriteCocktailEntity
+
+    @Delete
+    suspend fun removeCocktailFromFavourites(cocktail: FavouriteCocktailEntity)
 
 }

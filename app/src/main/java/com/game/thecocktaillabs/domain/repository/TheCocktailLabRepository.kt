@@ -1,6 +1,7 @@
 package com.game.thecocktaillabs.domain.repository
 
 import com.game.thecocktaillabs.common.Resource
+import com.game.thecocktaillabs.data.local.entity.FavouriteCocktailEntity
 import com.game.thecocktaillabs.domain.model.Category
 import com.game.thecocktaillabs.domain.model.Drink
 import com.game.thecocktaillabs.domain.model.Filter
@@ -25,5 +26,13 @@ interface TheCocktailLabRepository {
     fun searchCocktailsByGlassType(glassType: String): Flow<Resource<List<Drink>>>
 
     fun lookupCocktailDetailsById(cocktailId: String): Flow<Resource<List<Drink>>>
+
+    suspend fun insertFavouriteCocktail(cocktail: Drink)
+
+    suspend fun getFavouriteCocktails(): List<FavouriteCocktailEntity>
+
+    suspend fun getCocktailById(idDrink: String): FavouriteCocktailEntity
+
+    suspend fun deleteCocktail(cocktail: FavouriteCocktailEntity)
 
 }

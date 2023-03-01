@@ -57,11 +57,13 @@ fun Instructions(
             text = "INSTRUCTIONS",
             fontFamily = FontFamily.SansSerif,
             fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.onSurface
         )
         Surface(
             modifier = modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colors.surface)
+                .background(MaterialTheme.colors.surface),
+            shape = RoundedCornerShape(10.dp)
         ) {
             Text(
                 text = instructions,
@@ -69,7 +71,7 @@ fun Instructions(
                 fontFamily = FontFamily.SansSerif,
                 textAlign = TextAlign.Start,
                 fontSize = 20.sp,
-                color = Color.Black,
+                color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(10.dp)
             )
         }
@@ -105,6 +107,7 @@ fun Ingredients(
                 text = "INGREDIENTS",
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.onSurface
             )
             IconButton(
                 onClick = { expanded = !expanded },
@@ -139,6 +142,7 @@ fun Ingredients(
                                         text = "ingredient",
                                         textAlign = TextAlign.Center,
                                         fontFamily = FontFamily.SansSerif,
+                                        color = Color.Black
                                     )
                                     Text(
                                         text = ingredient.ingredient,
@@ -157,7 +161,8 @@ fun Ingredients(
                                     Text(
                                         text = "quantity",
                                         textAlign = TextAlign.Center,
-                                        fontFamily = FontFamily.SansSerif
+                                        fontFamily = FontFamily.SansSerif,
+                                        color = Color.Black
                                     )
                                     Text(
                                         text = ingredient.measure,
@@ -185,7 +190,7 @@ fun Ingredients(
 @Composable
 fun IngredientImage(url: String, modifier: Modifier = Modifier) {
     Surface(
-        modifier = modifier.size(60.dp),
+        modifier = modifier.size(70.dp),
         shape = RoundedCornerShape(10.dp),
         color = Color.Transparent,
         border = BorderStroke(4.dp, MaterialTheme.colors.primary)

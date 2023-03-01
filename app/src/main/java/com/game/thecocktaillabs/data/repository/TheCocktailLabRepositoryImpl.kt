@@ -3,6 +3,7 @@ package com.game.thecocktaillabs.data.repository
 import com.game.thecocktaillabs.common.Resource
 import com.game.thecocktaillabs.common.toDrink
 import com.game.thecocktaillabs.data.local.TheCocktailLabDatabase
+import com.game.thecocktaillabs.data.local.entity.FavouriteCocktailEntity
 import com.game.thecocktaillabs.data.remote.TheCocktailDbApiService
 import com.game.thecocktaillabs.domain.model.Category
 import com.game.thecocktaillabs.domain.model.Drink
@@ -182,8 +183,8 @@ class TheCocktailLabRepositoryImpl @Inject constructor(
 
     override fun lookupCocktailDetailsById(cocktailId: String): Flow<Resource<List<Drink>>> {
         return flow {
-            emit(Resource.Loading())
             try {
+                emit(Resource.Loading())
                 val response =
                     apiService.lookupCocktailDetailsById(cocktailId).drinks.map { it.toDrink() }
                 emit(Resource.Success(response))
@@ -196,6 +197,22 @@ class TheCocktailLabRepositoryImpl @Inject constructor(
             e.printStackTrace()
             emit(Resource.Error(message = "an ${e.message} error occurred"))
         }
+    }
+
+    override suspend fun insertFavouriteCocktail(cocktail: Drink) {
+        dao.insertCocktailToFavourites(cocktail.toFavouriteCocktalEntity())
+    }
+
+    override suspend fun getFavouriteCocktails(): List<FavouriteCocktailEntity> {
+        return dao.getFavouriteCocktails()
+    }
+
+    override suspend fun getCocktailById(idDrink: String): FavouriteCocktailEntity {
+        return dao.getCocktailById(idDrink)
+    }
+
+    override suspend fun deleteCocktail(cocktail: FavouriteCocktailEntity) {
+        dao.removeCocktailFromFavourites(cocktail)
     }
 
 

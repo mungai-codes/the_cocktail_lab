@@ -8,28 +8,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val darkColorScheme = darkColors(
-    primary = Color(0xfffbd24a),
-    primaryVariant = Purple700,
-    secondary = Teal200,
-    background = Color(0xff121212),
-    surface = Color.LightGray,
+    primary = Color(0xffc83b4c), // deep red
+    primaryVariant = Color(0xff9b2c3b), // darker red
+    secondary = Color(0xffeda244), // orange
+    background = Color(0xff1b1b1b), // dark gray
+    surface = Color(0xff2d2d2d), // light black
     onPrimary = Color.White,
     onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color(0xffffffff)
+    onBackground = Color.White,
+    onSurface = Color.White
 )
 
+
 private val lightColorScheme = lightColors(
-    primary = Color(0xff4ecdc4),
-    primaryVariant = Purple700,
-    secondary = Teal200,
-    background = Color(0xfff5f5f5),
+    primary = Color(0xffc83b4c), // deep red
+    primaryVariant = Color(0xff9b2c3b), // darker red
+    secondary = Color(0xffeda244), // orange
+    background = Color(0xfff4f4f4), // light gray
     surface = Color.White,
     onPrimary = Color.White,
     onSecondary = Color.Black,
     onBackground = Color.Black,
-    onSurface = Color(0xff333333),
+    onSurface = Color.Black
 )
+
 
 @Composable
 fun TheCocktailLabsTheme(

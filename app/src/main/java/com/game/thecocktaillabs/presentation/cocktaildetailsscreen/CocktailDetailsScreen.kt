@@ -21,7 +21,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.SmartDisplay
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -124,19 +123,6 @@ fun CocktailDetailsScreen(
                             contentScale = ContentScale.FillBounds,
                             contentDescription = drink.strDrink
                         )
-                        IconButton(
-                            onClick = { isLiked = !isLiked },
-                            modifier = Modifier
-                                .align(Alignment.TopEnd)
-                                .padding(top = 8.dp, end = 8.dp)
-                        ) {
-                            Icon(
-                                imageVector = favouriteStatus,
-                                contentDescription = "favourite",
-                                tint = tint,
-                                modifier = Modifier.size(40.dp)
-                            )
-                        }
                         Row(
                             modifier = Modifier
                                 .align(Alignment.BottomStart)
@@ -169,11 +155,13 @@ fun CocktailDetailsScreen(
                                         .weight(1f)
                                 )
                             }
-                            IconButton(onClick = { /*TODO*/ }) {
+                            IconButton(
+                                onClick = { isLiked = !isLiked },
+                            ) {
                                 Icon(
-                                    imageVector = Icons.Outlined.SmartDisplay,
-                                    contentDescription = "youtube",
-                                    tint = Color(0xFFFE0000),
+                                    imageVector = favouriteStatus,
+                                    contentDescription = "favourite",
+                                    tint = tint,
                                     modifier = Modifier
                                         .size(40.dp)
                                         .padding(end = 8.dp)
@@ -185,7 +173,9 @@ fun CocktailDetailsScreen(
                 }
 
                 LazyColumn(
-                    modifier = Modifier.weight(2f),
+                    modifier = Modifier
+                        .weight(2f)
+                        .padding(bottom = innerPadding.calculateBottomPadding() + 5.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = PaddingValues(horizontal = 20.dp)
                 ) {
