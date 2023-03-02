@@ -52,6 +52,10 @@ fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hi
         }
     }
 
+    LaunchedEffect(key1 = true) {
+        viewModel.loadFavouriteCocktails()
+    }
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {

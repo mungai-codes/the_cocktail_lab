@@ -49,15 +49,15 @@ class HomeScreenViewModel @Inject constructor(
     }
 
 
-    private fun loadFavouriteCocktails() {
-        viewModelScope.launch(ioDispatcher) {
-            _uiState.update {
-                it.copy(
-                    favouriteCocktails = repository.getFavouriteCocktails()
-                )
-            }
-        }
-    }
+   fun loadFavouriteCocktails() {
+       viewModelScope.launch(ioDispatcher) {
+           _uiState.update {
+               it.copy(
+                   favouriteCocktails = repository.getFavouriteCocktails()
+               )
+           }
+       }
+   }
 
     private fun loadFeaturedCocktails() {
         viewModelScope.launch {
