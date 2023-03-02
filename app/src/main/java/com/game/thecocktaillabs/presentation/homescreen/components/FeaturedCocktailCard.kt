@@ -1,8 +1,7 @@
-package com.game.thecocktaillabs.presentation.homescreen
+package com.game.thecocktaillabs.presentation.homescreen.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,14 +24,15 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.game.thecocktaillabs.R
-import com.game.thecocktaillabs.data.local.entity.FavouriteCocktailEntity
+import com.game.thecocktaillabs.domain.model.Drink
 
 @Composable
-fun FavouriteCocktailCard(
+fun FeaturedCocktail(
     modifier: Modifier = Modifier,
-    drink: FavouriteCocktailEntity,
+    drink: Drink,
     onClick: () -> Unit
 ) {
+
     Surface(
         modifier = modifier
             .height(240.dp)
@@ -54,27 +54,23 @@ fun FavouriteCocktailCard(
                 modifier = Modifier
                     .fillMaxSize()
             )
-            Row(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .fillMaxWidth()
-                    .padding(horizontal = 5.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                drink.strDrink?.let {
-                    Text(
-                        text = it,
-                        fontFamily = FontFamily.SansSerif,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .padding(3.dp),
-                        color = MaterialTheme.colors.primary
-                    )
-                }
+
+            drink.strDrink?.let {
+                Text(
+                    text = it,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .padding(3.dp)
+                        .fillMaxWidth()
+                        .align(Alignment.BottomStart),
+                    color = MaterialTheme.colors.primary
+                )
             }
+
         }
     }
 }

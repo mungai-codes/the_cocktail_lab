@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.game.thecocktaillabs.presentation.homescreen.FabButton
+import com.game.thecocktaillabs.presentation.homescreen.components.FabButton
 import com.game.thecocktaillabs.presentation.navigation.Screen
 import com.game.thecocktaillabs.presentation.ui.theme.TheCocktailLabsTheme
 import com.mungaicodes.tomesanctuary.util.UiEvent

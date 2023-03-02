@@ -1,4 +1,4 @@
-package com.game.thecocktaillabs.presentation.homescreen
+package com.game.thecocktaillabs.presentation.homescreen.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
+    timeOfDay: String,
     onSearchClicked: (String) -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -45,6 +46,17 @@ fun TopBar(
 
     var query by remember {
         mutableStateOf("")
+    }
+
+    var greeting = when (timeOfDay) {
+        "morning" -> "\"Rise and shine, time for a stiff OJ!"
+
+        "afternoon" -> "5 o'clock somewhere! Soda for now."
+
+        "evening" -> "Cheers to another day! Responsibly, of course."
+
+        else -> "Time for a nightcap... or water."
+
     }
 
     Column(
@@ -60,17 +72,19 @@ fun TopBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Good Morning Username",
+                text = greeting,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 20.sp,
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.weight(1f)
             )
             IconButton(onClick = onSettingsClick) {
                 Icon(
                     imageVector = Icons.Outlined.Settings,
                     contentDescription = "App Settings",
-                    tint = MaterialTheme.colors.primary
+                    tint = MaterialTheme.colors.primary,
+                    modifier = Modifier.weight(1f)
                 )
             }
         }

@@ -1,5 +1,6 @@
 package com.game.thecocktaillabs.presentation.homescreen
 
+import android.icu.util.Calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.game.thecocktaillabs.common.Resource
@@ -34,7 +35,19 @@ class HomeScreenViewModel @Inject constructor(
     init {
         loadFavouriteCocktails()
         loadFeaturedCocktails()
+        getTimeOfDay()
     }
+
+    private fun getTimeOfDay() {
+        val calendar = Calendar.getInstance()
+        when (calendar.get(Calendar.HOUR_OF_DAY)) {
+            in 6 until 12 -> _uiState.update { it.copy(timeOfDay = "morning") }
+            in 12 until 17 -> _uiState.update { it.copy(timeOfDay = "afternoon") }
+            in 17 until 21 -> _uiState.update { it.copy(timeOfDay = "evening") }
+            else -> _uiState.update { it.copy(timeOfDay = "night") }
+        }
+    }
+
 
     private fun loadFavouriteCocktails() {
         viewModelScope.launch(ioDispatcher) {
@@ -76,12 +89,5 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun updateQuery(input: String) {
-        _uiState.update {
-            it.copy(
-
-            )
-        }
-    }
 
 }

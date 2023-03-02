@@ -58,4 +58,5 @@ interface TheCockTailLabDao {
     @Delete
     suspend fun removeCocktailFromFavourites(cocktail: FavouriteCocktailEntity)
 
+
 }

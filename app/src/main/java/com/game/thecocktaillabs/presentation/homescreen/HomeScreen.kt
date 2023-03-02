@@ -19,6 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.game.thecocktaillabs.presentation.homescreen.components.FabButton
+import com.game.thecocktaillabs.presentation.homescreen.components.FavouriteCocktailCard
+import com.game.thecocktaillabs.presentation.homescreen.components.FeaturedCocktail
+import com.game.thecocktaillabs.presentation.homescreen.components.HomeScreenData
+import com.game.thecocktaillabs.presentation.homescreen.components.TopBar
 import com.game.thecocktaillabs.presentation.navigation.Screen
 import com.game.thecocktaillabs.presentation.settingsdrawer.Settings
 import com.game.thecocktaillabs.presentation.ui.theme.TheCocktailLabsTheme
@@ -51,6 +56,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hi
         scaffoldState = scaffoldState,
         topBar = {
             TopBar(
+                timeOfDay = state.timeOfDay,
                 onSearchClicked = { query ->
                     navController.navigate(Screen.SearchScreen.route + "?query=${query}")
                 }

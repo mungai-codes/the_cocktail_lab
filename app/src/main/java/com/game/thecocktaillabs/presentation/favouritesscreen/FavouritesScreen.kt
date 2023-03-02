@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.game.thecocktaillabs.R
-import com.game.thecocktaillabs.presentation.homescreen.FabButton
+import com.game.thecocktaillabs.presentation.homescreen.components.FabButton
 import com.game.thecocktaillabs.presentation.navigation.Screen
 
 @Composable

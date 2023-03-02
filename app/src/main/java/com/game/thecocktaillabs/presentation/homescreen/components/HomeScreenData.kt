@@ -1,4 +1,4 @@
-package com.game.thecocktaillabs.presentation.homescreen
+package com.game.thecocktaillabs.presentation.homescreen.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

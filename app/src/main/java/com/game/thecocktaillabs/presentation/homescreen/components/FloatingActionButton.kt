@@ -1,4 +1,4 @@
-package com.game.thecocktaillabs.presentation.homescreen
+package com.game.thecocktaillabs.presentation.homescreen.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutLinearInEasing

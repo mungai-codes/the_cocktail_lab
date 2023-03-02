@@ -8,5 +8,6 @@ data class HomeScreenUiState(
     val featuredCocktails: List<Drink> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null,
-    val seeMoreQuery: String = ""
+    val seeMoreQuery: String = "",
+    val timeOfDay: String = "morning",
 )
