@@ -200,7 +200,7 @@ class TheCocktailLabRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertFavouriteCocktail(cocktail: Drink) {
-        dao.insertCocktailToFavourites(cocktail.toFavouriteCocktalEntity())
+        dao.insertCocktailToFavourites(cocktail.toFavouriteCocktailEntity())
     }
 
     override suspend fun getFavouriteCocktails(): List<FavouriteCocktailEntity> {

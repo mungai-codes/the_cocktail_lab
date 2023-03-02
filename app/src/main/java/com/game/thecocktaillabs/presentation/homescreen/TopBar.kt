@@ -19,6 +19,10 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -32,14 +36,16 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
-    query: String,
-    updateQuery: (String) -> Unit,
-    onSearchClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit,
     onSettingsClick: () -> Unit
 ) {
 
 
     val focusManager = LocalFocusManager.current
+
+    var query by remember {
+        mutableStateOf("")
+    }
 
     Column(
         modifier = modifier
@@ -74,7 +80,7 @@ fun TopBar(
         ) {
             OutlinedTextField(
                 value = query,
-                onValueChange = { updateQuery(it) },
+                onValueChange = { query = it },
                 placeholder = {
                     Text(
                         text = "Search cocktails",
@@ -83,7 +89,7 @@ fun TopBar(
                     )
                 },
                 leadingIcon = {
-                    IconButton(onClick = { onSearchClicked() }) {
+                    IconButton(onClick = { onSearchClicked(query) }) {
                         Icon(
                             imageVector = Icons.Rounded.Search,
                             contentDescription = "recipe search"
@@ -110,7 +116,7 @@ fun TopBar(
                 ),
                 keyboardActions = KeyboardActions(
                     onSearch = {
-                        onSearchClicked()
+                        onSearchClicked(query)
                         focusManager.clearFocus(true)
                     },
                     onDone = {

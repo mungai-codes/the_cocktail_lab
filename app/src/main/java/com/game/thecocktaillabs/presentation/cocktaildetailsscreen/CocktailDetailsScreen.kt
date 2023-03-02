@@ -66,8 +66,6 @@ fun CocktailDetailsScreen(
         false -> Pair(Icons.Outlined.FavoriteBorder, Color.Black)
     }
 
-
-
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
@@ -83,23 +81,25 @@ fun CocktailDetailsScreen(
     Scaffold(
         scaffoldState = scaffoldState
     ) { innerPadding ->
-        state.drink.forEach { drink ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = innerPadding.calculateTopPadding()),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if (state.loading) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                }
 
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = innerPadding.calculateTopPadding()),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            if (state.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+            state.drink.forEach { drink ->
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -219,22 +219,58 @@ fun CocktailDetailsScreen(
                             Column(
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                Text(
-                                    text = "tags", fontFamily = FontFamily.SansSerif,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colors.onSurface
-                                )
-                                Surface(
-                                    elevation = 16.dp,
-                                    shape = RoundedCornerShape(10.dp)
-                                ) {
-                                    drink.strTags?.let {
+                                if (drink.strTags != null) {
+                                    Text(
+                                        text = "tags", fontFamily = FontFamily.SansSerif,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colors.onSurface
+                                    )
+                                    Surface(
+                                        elevation = 16.dp,
+                                        shape = RoundedCornerShape(10.dp)
+                                    ) {
                                         Text(
-                                            text = it, fontFamily = FontFamily.SansSerif,
+                                            text = drink.strTags, fontFamily = FontFamily.SansSerif,
                                             fontWeight = FontWeight.SemiBold,
                                             modifier = Modifier
                                                 .padding(5.dp)
                                         )
+                                    }
+                                } else if (drink.strIBA != null) {
+                                    Text(
+                                        text = "IBA", fontFamily = FontFamily.SansSerif,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colors.onSurface
+                                    )
+                                    Surface(
+                                        elevation = 16.dp,
+                                        shape = RoundedCornerShape(10.dp)
+                                    ) {
+                                        Text(
+                                            text = drink.strIBA, fontFamily = FontFamily.SansSerif,
+                                            fontWeight = FontWeight.SemiBold,
+                                            modifier = Modifier
+                                                .padding(5.dp)
+                                        )
+                                    }
+                                } else {
+                                    Text(
+                                        text = "glass", fontFamily = FontFamily.SansSerif,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colors.onSurface
+                                    )
+                                    Surface(
+                                        elevation = 16.dp,
+                                        shape = RoundedCornerShape(10.dp)
+                                    ) {
+                                        drink.strGlass?.let {
+                                            Text(
+                                                text = it, fontFamily = FontFamily.SansSerif,
+                                                fontWeight = FontWeight.SemiBold,
+                                                modifier = Modifier
+                                                    .padding(5.dp)
+                                            )
+                                        }
                                     }
                                 }
                             }

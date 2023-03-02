@@ -27,14 +27,14 @@ data class Drink(
     val dateModified: String?,
     val ingredients: List<Ingredient>?
 ) {
-    fun toFavouriteCocktalEntity(): FavouriteCocktailEntity {
+    fun toFavouriteCocktailEntity(): FavouriteCocktailEntity {
         return FavouriteCocktailEntity(
-            idDrink!!,
-            strAlcoholic,
-            strCategory,
-            strDrinkThumb,
-            strDrink,
-            strVideo
+            idDrink = idDrink!!,
+            strAlcoholic = strAlcoholic,
+            strCategory = strCategory,
+            strDrinkThumb = strDrinkThumb,
+            strDrink = strDrink,
+            strVideo = strVideo
         )
     }
 }

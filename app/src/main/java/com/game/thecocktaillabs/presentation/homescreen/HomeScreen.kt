@@ -10,6 +10,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -21,6 +22,8 @@ import androidx.navigation.compose.rememberNavController
 import com.game.thecocktaillabs.presentation.navigation.Screen
 import com.game.thecocktaillabs.presentation.settingsdrawer.Settings
 import com.game.thecocktaillabs.presentation.ui.theme.TheCocktailLabsTheme
+import com.mungaicodes.tomesanctuary.util.UiEvent
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -32,15 +35,24 @@ fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hi
 
     val state = viewModel.uiState.collectAsState().value
 
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is UiEvent.ShowSnackBar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.message
+                    )
+                }
+            }
+        }
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             TopBar(
-                query = state.query,
-                updateQuery = viewModel::updateQuerry,
-                onSearchClicked = {
-                    navController.navigate(Screen.SearchScreen.route + "?query=${state.query}")
+                onSearchClicked = { query ->
+                    navController.navigate(Screen.SearchScreen.route + "?query=${query}")
                 }
             ) {
                 scope.launch {
@@ -50,7 +62,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hi
         },
         floatingActionButton = {
             FabButton(
-                homeButtonClicked = {  },
+                homeButtonClicked = { },
                 favouritesButtonClicked = { navController.navigate(Screen.FavouritesScreen.route) },
                 searchButtonClicked = { navController.navigate(Screen.SearchScreen.route) }
             )
@@ -83,22 +95,49 @@ fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hi
 
                 item {
                     HomeScreenData(
-                        data = listOf("1", "2", "3", "4", "5"),
+                        data = state.featuredCocktails.shuffled().take(6),
                         title = "Featured Cocktails",
-                        seeMore = { /*TODO*/ }
-                    ) {
-                        ItemCard()
+                        seeMore = {
+                            navController.navigate(Screen.SearchScreen.route + "?query=${state.seeMoreQuery}")
+                        }
+                    ) { cocktail ->
+                        FeaturedCocktail(
+                            drink = cocktail,
+                        ) {
+                            navController.navigate(route = Screen.DetailsScreen.route + "?cocktailId=${cocktail.idDrink}")
+                        }
                     }
                 }
 
                 item {
-                    HomeScreenData(
-                        data = listOf("1", "2", "3", "4", "5"),
-                        title = "Your Cocktails",
-                        seeMore = { /*TODO*/ }
-                    ) {
-                        ItemCard()
+                    if (state.favouriteCocktails.isEmpty()) {
+                        HomeScreenData(
+                            data = state.featuredCocktails.shuffled().take(6),
+                            title = "More Featured Cocktails",
+                            seeMore = {
+                                navController.navigate(Screen.SearchScreen.route + "?query=${state.seeMoreQuery}")
+                            }
+                        ) { cocktail ->
+                            FeaturedCocktail(
+                                drink = cocktail,
+                            ) {
+                                navController.navigate(route = Screen.DetailsScreen.route + "?cocktailId=${cocktail.idDrink}")
+                            }
+                        }
+                    } else {
+                        HomeScreenData(
+                            data = state.favouriteCocktails,
+                            title = "Your Cocktails",
+                            seeMore = {
+                                navController.navigate(route = Screen.FavouritesScreen.route)
+                            }
+                        ) { cocktail ->
+                            FavouriteCocktailCard(drink = cocktail) {
+                                navController.navigate(route = Screen.DetailsScreen.route + "?cocktailId=${cocktail.idDrink}")
+                            }
+                        }
                     }
+
                 }
             }
         }

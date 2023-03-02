@@ -27,4 +27,12 @@ class FavouritesViewModel @Inject constructor(
             _uiState.update { it.copy(favouriteCocktails = repository.getFavouriteCocktails()) }
         }
     }
+
+    fun removeCocktailFromFavourites(idDrink: String) {
+        viewModelScope.launch(ioDispatcher) {
+            val cocktail = repository.getCocktailById(idDrink)
+            repository.deleteCocktail(cocktail)
+            _uiState.update { it.copy(favouriteCocktails = repository.getFavouriteCocktails()) }
+        }
+    }
 }

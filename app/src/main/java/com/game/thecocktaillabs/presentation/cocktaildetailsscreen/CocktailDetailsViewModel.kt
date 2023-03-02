@@ -40,13 +40,13 @@ class CocktailDetailsViewModel @Inject constructor(
                 repository.lookupCocktailDetailsById(cocktailId = cocktailId).onEach { result ->
                     when (result) {
                         is Resource.Loading -> {
-                            _uiState.update { it.copy(loading = true) }
+                            _uiState.update { it.copy(isLoading = true) }
                         }
 
                         is Resource.Success -> {
                             _uiState.update {
                                 it.copy(
-                                    loading = false,
+                                    isLoading = false,
                                     drink = result.data ?: emptyList()
                                 )
                             }
@@ -55,7 +55,7 @@ class CocktailDetailsViewModel @Inject constructor(
                         is Resource.Error -> {
                             _uiState.update {
                                 it.copy(
-                                    loading = false,
+                                    isLoading = false,
                                     error = result.message
                                 )
                             }
